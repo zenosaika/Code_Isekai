@@ -1,0 +1,14 @@
+{% extends "Code_Isekai/header.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container py-5">
+    <h1>Code Editor</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ code_editor_form|crispy }}
+        <button class="btn btn-primary" type="submit">Run</button>
+    </form>
+</div>
+
+{% endblock %}
