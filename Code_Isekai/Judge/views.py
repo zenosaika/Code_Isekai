@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import CodeEditorForm
 from .models import CodeEditor
+import pip._vendor.requests as requests
 
 # Create your views here.
 def judge_test(request):
@@ -9,7 +10,33 @@ def judge_test(request):
         code_editor_form = CodeEditorForm(request.POST)
         if code_editor_form.is_valid():
             code_editor_form.save()
-            messages.success(request, 'Submit the code successful. Please wait a second!')
+
+            # Create Submission
+            url = "https://judge0-ce.p.rapidapi.com/submissions"
+            querystring = {"base64_encoded":"false", "fields":"*"}
+            payload = {
+                "language_id": code_editor_form.cleaned_data['lang'],
+                "source_code": code_editor_form.cleaned_data['code'],
+                "stdin": "10"
+            }
+            headers = {
+                "content-type": "application/json",
+                "Content-Type": "application/json",
+                "X-RapidAPI-Key": "e2a57abc68msh4154133e8da5d82p1fe623jsn8ddbcf7ff31b",
+                "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com"
+            }
+            response = requests.request("POST", url, json=payload, headers=headers, params=querystring)
+
+            # Get Submission
+            url = f"https://judge0-ce.p.rapidapi.com/submissions/{response.json()['token']}"
+            querystring = {"base64_encoded":"false", "fields":"*"}
+            headers = {
+                "X-RapidAPI-Key": "e2a57abc68msh4154133e8da5d82p1fe623jsn8ddbcf7ff31b",
+                "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com"
+            }
+            response = requests.request("GET", url, headers=headers, params=querystring)
+
+            messages.success(request, f"RESPONSE: {response.text}")
             return redirect('/judge_test')
     try:
         code_editor = list(CodeEditor.objects.all())

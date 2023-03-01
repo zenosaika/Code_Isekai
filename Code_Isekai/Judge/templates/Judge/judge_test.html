@@ -2,13 +2,72 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
+<style>
+    .container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .input-box {
+        width: 50%;
+        padding: 20px;
+    }
+
+    .output-box {
+        width: 50%;
+        padding: 20px;
+    }
+
+    .stdout {
+        white-space: pre;
+        line-height: 6px;
+        width: 600px;
+        height: 100%;
+        border-radius: 2rem;
+        color: white;
+        padding: 30px;
+        background: rgba(4, 4, 4, 0.8);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+</style>
+
 <div class="container py-5">
-    <h1>Code Editor</h1>
-    <form method="POST">
-        {% csrf_token %}
-        {{ code_editor_form|crispy }}
-        <button class="btn btn-primary" type="submit">Run</button>
-    </form>
+    <div class="input-box">
+        <h1>Code Editor</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {{ code_editor_form|crispy }}
+            <button class="btn btn-primary" type="submit">Run</button>
+        </form>
+    </div>
+    <div class="output-box">
+        <h1>Output</h1>
+        <div class="stdout">
+<tt>         *</tt>
+<tt>        ***</tt>
+<tt>       *****</tt>
+<tt>      *******</tt>
+<tt>     *********</tt>
+<tt>    ***********</tt>
+<tt>   *************</tt>
+<tt>  ***************</tt>
+<tt> *****************</tt>
+<tt>*******************</tt>
+<tt> *****************</tt>
+<tt>  ***************</tt>
+<tt>   *************</tt>
+<tt>    ***********</tt>
+<tt>     *********</tt>
+<tt>      *******</tt>
+<tt>       *****</tt>
+<tt>        ***</tt>
+<tt>         *</tt>
+        </div>
+    </div>
 </div>
 
 {% endblock %}
