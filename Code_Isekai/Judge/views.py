@@ -5,7 +5,7 @@ from .models import CodeEditor
 import pip._vendor.requests as requests
 
 # Create your views here.
-def judge_test(request):
+def judge(request):
     if request.method == 'POST':
         code_editor_form = CodeEditorForm(request.POST)
         if code_editor_form.is_valid():
@@ -37,7 +37,7 @@ def judge_test(request):
             response = requests.request("GET", url, headers=headers, params=querystring)
 
             messages.success(request, f"RESPONSE: {response.text}")
-            return redirect('/judge_test')
+            return redirect('/judge')
     try:
         code_editor = list(CodeEditor.objects.all())
         for each_record in code_editor[:-1]:
@@ -49,4 +49,4 @@ def judge_test(request):
     code_editor_form = CodeEditorForm()
     code_editor_form['code'].initial = code_editor.code
     code_editor_form['lang'].initial = code_editor.lang
-    return render(request, 'Judge/judge_test.html', {'code_editor_form':code_editor_form})
+    return render(request, 'Judge/judge.html', {'code_editor_form':code_editor_form})
