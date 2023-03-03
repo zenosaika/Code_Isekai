@@ -4,5 +4,5 @@ from .models import CodeEditor
 class CodeEditorForm(ModelForm):
     class Meta:
         model = CodeEditor
-        fields = '__all__'
+        fields = ['lang', 'code']
         

@@ -3,6 +3,10 @@
 {% block content %}
 
 <style>
+    .nav5 {
+    color: rgb(31, 139, 158);
+    }
+
     .container {
         display: flex;
         flex-direction: row;
@@ -19,8 +23,7 @@
         padding: 20px;
     }
 
-    .stdout {
-        white-space: pre;
+    .stdout-box {
         line-height: 6px;
         width: 600px;
         height: 100%;
@@ -46,26 +49,8 @@
     </div>
     <div class="output-box">
         <h1>Output</h1>
-        <div class="stdout">
-<tt>         *</tt>
-<tt>        ***</tt>
-<tt>       *****</tt>
-<tt>      *******</tt>
-<tt>     *********</tt>
-<tt>    ***********</tt>
-<tt>   *************</tt>
-<tt>  ***************</tt>
-<tt> *****************</tt>
-<tt>*******************</tt>
-<tt> *****************</tt>
-<tt>  ***************</tt>
-<tt>   *************</tt>
-<tt>    ***********</tt>
-<tt>     *********</tt>
-<tt>      *******</tt>
-<tt>       *****</tt>
-<tt>        ***</tt>
-<tt>         *</tt>
+        <div class="stdout-box">
+            {% if stdout %}<tt style="white-space: pre;">{{ stdout }}</tt>{% endif %}
         </div>
     </div>
 </div>
